@@ -19,8 +19,7 @@ adapter_ch = Channel.fromPath(params.adapters, checkIfExists: true).first()
 
 // Define fastqc process
 process fastqc {
-    label "low_ram"
-    label "fastqc"	
+    label "low_ram"	
     publishDir "${params.outdir}/quality-control-${sample}/", mode: 'copy', overwrite: true
 
     input:
@@ -39,8 +38,7 @@ process fastqc {
 process trimmomatic {
     publishDir "${params.outDir}/trimmed-reads-${sample}/", mode: 'copy'
     label "low_ram"
-    label "trimmomatic"
-    
+   
     input:
     tuple val(sample), path(reads)
     path adapters_file
