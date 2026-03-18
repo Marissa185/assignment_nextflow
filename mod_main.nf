@@ -53,6 +53,7 @@ process trimmomatic {
 
 // Run the workflow
 workflow {
+	read_pairs_ch.view()
     fastqc(read_pairs_ch)
     trimmomatic(read_pairs_ch, adapter_ch)
 }
