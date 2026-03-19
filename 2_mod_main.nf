@@ -2,13 +2,12 @@
 
 nextflow.enable.dsl=2
 
-
+// Parameters
 params.reads = 'data/*_{1,2}.fq.gz'
 params.outdir = './outputs'
 params.adapters = 'data/adapters.fa'
 params.envdir = './envs'
 params.refdir = 'data/LG12.fasta'
-
 
 log.info """
       LIST OF PARAMETERS
@@ -23,11 +22,8 @@ Reference        : ${params.refdir}
 
 // Create channels
 read_pairs_ch = Channel.fromFilePairs(params.reads, checkIfExists: true).map { sample, reads -> tuple(sample, reads.collect { it.toAbsolutePath() }) }
-
 adapter_ch = Channel.fromPath(params.adapters, checkIfExists: true).first()
-
 index_ch      = Channel.fromPath("${params.refdir}*", checkIfExists: true).collect()
-
 ref_prefix    = file(params.refdir).name
 
     
@@ -83,7 +79,6 @@ process bwamem2 {
     val index_prefix  
 
     output:
-    // Change this to .sam if you aren't using samtools yet
     tuple val(sample), path("${sample}.sam") 
 
     script:
