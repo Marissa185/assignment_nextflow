@@ -1,6 +1,5 @@
-.nextflow.log.*
+.nextflow.log*
 null/
-nxf-tmp.*
 outputs/
 work/
 
