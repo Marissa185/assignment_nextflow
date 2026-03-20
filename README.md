@@ -20,3 +20,25 @@ The original file had few initial errors and some commands were missing to conne
 - In the 1_ori_main.nf file `param.outDir` was changed to `param.dir`.
 - In the workflow block `adapter_ch` was added to resolve the error status  `'Process `trimmomatic` declares 2 inputs but was called with 1 argument'`.
 - Additionally, an extra space between `ILLUMINACLIP` and the adapter sample was removed in the `timmomatic process` script block to command formating.
+
+### 2_mod_main.nf
+The errors found above were fixed , additionally following changes were made:  
+- Parameters added: params.refdir, params.envdir and mapped within alignment process.
+- Channels added: index_ch, ref_prefix which were required for alignment process.
+- Alignment process block using bwa-mem2 and incooporated within the workflow subsection.
+
+### 3_pipeline_main.nf
+This file is a replicate of the above but it is modularised. The following changes had to be incoorporated:
+- The publishing directory was changed from `2_output` to `3_output` so as to not have outputs of `2_mod_main.nf` be overwritten.
+
+- To modularise `// Module pipeline` section was added to read in the `*.nf` files from `modules/` folder.
+
+### modules/
+A `modules/` folder was created containing `fastqc.nf`, `trimmomatic.nf` and `bwamem2.nf` files.
+- The subsection `// Process fastqc` was moved into the `fastqc.nf` file.
+- The subsection `// Process trimmomatic` was moved into the `trimmomatic.nf` file.
+- The subsection `// Process bwamem2` was moved into the `bwamem2.nf` file.
+
+### env/ 
+A `envs/` folder was created containing `fastqc-env.yml`, `bwamem2-env.yml` and `trimmomatic-env.yml` files. These contain conda environments which help in running respective processes within the `3_pipeline_main.nf`.
+
