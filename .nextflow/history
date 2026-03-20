@@ -4,3 +4,6 @@
 2026-03-19 22:14:36	2m 35s	gigantic_picasso	OK	e0cd5275ca69cfec2620c73443eacbb2	5d84ddc0-d9ba-4194-864a-7482ac365e30	nextflow run mod_main.nf
 2026-03-19 22:23:29	4m 8s	focused_majorana	OK	e0cd5275ca69cfec2620c73443eacbb2	a36b1889-86a4-4a8b-9f9a-f65367c97132	nextflow run 2_mod_main.nf
 2026-03-19 22:34:39	4m 3s	zen_laplace	OK	e0cd5275ca69cfec2620c73443eacbb2	ff8bfdb3-a290-4a34-a3db-979f59a7d15f	nextflow run 2_mod_main.nf
+2026-03-20 12:02:20	1m 59s	boring_nightingale	OK	142dad014564d64433f5f20f6985bf34	ff62154f-bb56-46b4-920d-1b5883e01e34	nextflow run 2_mod_main.nf
+2026-03-20 12:09:34	1m 52s	boring_gates	OK	f8f0fec872a55a8a6dab545e7ed892ef	2c5fb5f9-d99d-4520-b6f8-26caa9972cd5	nextflow run 3_pipeline_main.nf
+2026-03-20 12:16:47	1m 50s	nauseous_kare	OK	7d9ce1f92303ea9e39861c22cf2a5572	4baa5687-d717-4916-9bbe-7e0c478160a3	nextflow run 3_pipeline_main.nf

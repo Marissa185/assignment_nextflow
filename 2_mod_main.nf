@@ -2,9 +2,10 @@
 
 nextflow.enable.dsl=2
 
+
 // Parameters
 params.reads = 'data/*_{1,2}.fq.gz'
-params.outdir = './outputs'
+params.outdir = './2_outputs'
 params.adapters = 'data/adapters.fa'
 params.envdir = './envs'
 params.refdir = 'data/LG12.fasta'
@@ -21,13 +22,13 @@ Reference        : ${params.refdir}
 
 
 // Create channels
-read_pairs_ch = Channel.fromFilePairs(params.reads, checkIfExists: true).map { sample, reads -> tuple(sample, reads.collect { it.toAbsolutePath() }) }
-adapter_ch = Channel.fromPath(params.adapters, checkIfExists: true).first()
-index_ch      = Channel.fromPath("${params.refdir}*", checkIfExists: true).collect()
-ref_prefix    = file(params.refdir).name
+read_pairs_ch   = Channel.fromFilePairs(params.reads, checkIfExists: true).map { sample, reads -> tuple(sample, reads.collect { it.toAbsolutePath() }) }
+adapter_ch      = Channel.fromPath(params.adapters, checkIfExists: true).first()
+index_ch        = Channel.fromPath("${params.refdir}*", checkIfExists: true).collect()
+ref_prefix      = file(params.refdir).name
 
     
-// Define fastqc process
+// Process fastqc
 process fastqc {
     conda "${params.envdir}/fastqc-env.yml"
     label "low_ram"	
