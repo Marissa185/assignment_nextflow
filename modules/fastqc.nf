@@ -1,7 +1,7 @@
-// Define fastqc process
-
+// Process fastqc
 process fastqc {
-    label "low_ram"
+    conda "${params.envdir}/fastqc-env.yml"
+    label "low_ram"	
     publishDir "${params.outdir}/quality-control-${sample}/", mode: 'copy', overwrite: true
 
     input:
@@ -15,4 +15,3 @@ process fastqc {
     fastqc ${reads}
     """
 }
-

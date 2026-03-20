@@ -1,8 +1,8 @@
 // Process trimmomatic
-
 process trimmomatic {
-    publishDir "${params.outdir}/trimmed-reads-${sample}/", mode: 'copy'
+    conda "${params.envdir}/trimmomatic-env.yml"
     label "low_ram"
+    publishDir "${params.outdir}/trimmed-reads-${sample}/", mode: 'copy'
 
     input:
     tuple val(sample), path(reads)
@@ -14,5 +14,6 @@ process trimmomatic {
 
     script:
     """
-    trimmomatic PE -phred33 ${reads[0]} ${reads[1]} ${sample}_1.trimmed.fq.gz ${sample}_1.discarded.fq.gz ${sample}_2.t>    """
+    trimmomatic PE -phred33 ${reads[0]} ${reads[1]} ${sample}_1.trimmed.fq.gz ${sample}_1.discarded.fq.gz ${sample}_2.trimmed.fq.gz ${sample}_2.discarded.fq.gz ILLUMINACLIP:${adapters_file}:2:30:10
+    """
 }

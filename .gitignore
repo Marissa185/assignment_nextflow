@@ -1,5 +1,7 @@
 .nextflow.log*
-null/
-outputs/
+.nextflow/
 work/
-
+envs/.nextflow/
+envs/.nextflow.log
+2_outputs/
+3_outputs/
