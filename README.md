@@ -3,6 +3,34 @@ Note - The commit id #5ad896357b180531cbd1ae23a3441a07d8a7fee5 was commited by #
 # About the Project
 The project was performed by akamsha_ui (Akamsha) and Marissa185 (Marissa) as part of the Nextflow Assignment. The provided `main.nf` file had a few initial errors and some commands were missing. The errors were rectified (detailed below) and an alignment process was then modularised which successfully to generate the output files (`.sam`). The proesses included `fastqc` (for quality control of the fastq files), `trimmomatic` (the adapters are trimmed from the fastq files), `bwa-mem2` (the output of trimmomatic is aligned to the reference genome).
 
+## About the directory and file
+The layout of the folder is as follows:  
+```
+assignment_nextflow/  
+├── .gitignore                                                   # To ignore files.  
+├── nextflow.config                                              # CPU, memory and conda specification needed for running *.nf.  
+├── data/                                                        # Folder with input data files.  
+│   ├── A_33_FDSW202661760-1r_HTNK5DSXY_L3_sub_1.fq.gz        
+│   ├── A_33_FDSW202661760-1r_HTNK5DSXY_L3_sub_2.fq.gz   
+│   ├── adapters.fa  
+│   ├── LG12.fasta    
+│   ├── LG12.fasta.0123  
+│   ├── LG12.fasta.amb  
+│   ├── LG12.fasta.ann          
+│   ├── LG12.fasta.bwt.2bit.64  
+│   └── LG12.fasta.pac  
+├── envs/                                                        # Folder with *.yml files to run processes in 2_mod_main.nf and 3_pipeline_main.nf.   
+│   ├── fastqc-env.yml           
+│   ├── bwamem2-env.yml  
+│   └── trimmomatic-env.yml       
+├── modules/                                                     # Folder with *.nf files to run processes in 2_mod_main.nf and 3_pipeline_main.nf.  
+│   ├── fastqc.nf             
+│   ├── bwamem2.nf  
+│   └── trimmomatic.nf            
+├── 1_ori_main.nf                                                # Original main.nf file.  
+├── 2_mod_main.nf                                                # Modified main.nf file with alignment step and corrected errors.  
+└── 3_pipeline_main.nf                                           # Modularized main.nf file.   
+```
 
 ## About the *.nf files and the dependent files and folders created
 
@@ -21,6 +49,9 @@ The original file had few initial errors and some commands were missing to conne
 - In the workflow block `adapter_ch` was added to resolve the error status  `'Process `trimmomatic` declares 2 inputs but was called with 1 argument'`.
 - Additionally, an extra space between `ILLUMINACLIP` and the adapter sample was removed in the `timmomatic process` script block to command formating.
 
+### env/ 
+A `envs/` folder was created containing `fastqc-env.yml`, `bwamem2-env.yml` and `trimmomatic-env.yml` files. These contain conda environments which help in running respective processes within the `2_mod_main.nf` and `3_pipeline_main.nf`.
+
 ### 2_mod_main.nf
 The errors found above were fixed , additionally following changes were made:  
 - Parameters added: params.refdir, params.envdir and mapped within alignment process.
@@ -30,7 +61,6 @@ The errors found above were fixed , additionally following changes were made:
 ### 3_pipeline_main.nf
 This file is a replicate of the above but it is modularised. The following changes had to be incoorporated:
 - The publishing directory was changed from `2_output` to `3_output` so as to not have outputs of `2_mod_main.nf` be overwritten.
-
 - To modularise `// Module pipeline` section was added to read in the `*.nf` files from `modules/` folder.
 
 ### modules/
@@ -38,7 +68,3 @@ A `modules/` folder was created containing `fastqc.nf`, `trimmomatic.nf` and `bw
 - The subsection `// Process fastqc` was moved into the `fastqc.nf` file.
 - The subsection `// Process trimmomatic` was moved into the `trimmomatic.nf` file.
 - The subsection `// Process bwamem2` was moved into the `bwamem2.nf` file.
-
-### env/ 
-A `envs/` folder was created containing `fastqc-env.yml`, `bwamem2-env.yml` and `trimmomatic-env.yml` files. These contain conda environments which help in running respective processes within the `3_pipeline_main.nf`.
-
